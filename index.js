@@ -1,3 +1,5 @@
+// https://agile-island-40140.herokuapp.com/
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const path = require('path')
@@ -15,13 +17,14 @@ const app = conversation()
 
 // Register handlers for Actions SDK
 
-app.handle('handler_name', conv => {
-  conv.add('Hi, how is it going?')
-  conv.add(new Image({
-    url: 'https://developers.google.com/web/fundamentals/accessibility/semantics-builtin/imgs/160204193356-01-cat-500.jpg',
-    alt: 'A cat',
-  }))
-})
+app.handle('greeting', conv => {
+  let message = 'A wondrous greeting, adventurer! Welcome back to the mythical land of Gryffinberg!';
+  if (!conv.user.lastSeenTime) {
+    message = 'Welcome to the mythical land of  Gryffinberg! Based on your clothes, you are not from around these lands. It looks like you\'re on your way to an epic journey.';
+  }
+  conv.add(message);
+ });
+ 
 
 /*******************/
 
