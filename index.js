@@ -30,5 +30,5 @@ app.handle('greeting', conv => {
 
 express()
   .use(bodyParser.json())
-  .post('/fulfillment', app)
+  .post('/', app)
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
