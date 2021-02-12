@@ -14,7 +14,7 @@ const { conversation } = require("@assistant/conversation");
 
 // Databse
 
-pwd = encodeURIComponent(secrets.pwd);
+pwd = process.env.DB_PWD || secrets.pwd;
 mongoose.connect(
   `mongodb+srv://root:${pwd}@hereisdx.khs4b.mongodb.net/voice-ir?retryWrites=true&w=majority`,
   {
