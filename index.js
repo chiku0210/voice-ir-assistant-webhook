@@ -1,36 +1,10 @@
-// Webhook HTTPS Endpoint:
-// https://agile-island-40140.herokuapp.com/
-
 const express = require("express");
-const bodyParser = require("body-parser");
-const secrets = require("./secrets");
-const path = require("path");
-const mongoose = require("mongoose");
-const data = require("./data");
-const PORT = process.env.PORT || 5000;
-/*******************/
-
 const { conversation } = require("@assistant/conversation");
-
-// Databse
-
-pwd = process.env.DB_PWD || secrets.pwd;
-mongoose.connect(
-  `mongodb+srv://root:${pwd}@hereisdx.khs4b.mongodb.net/voice-ir?retryWrites=true&w=majority`,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
-
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-
-// Create an app instance
-const app = conversation();
-
-// Register handlers for Actions SDK
-app.handle("greeting", (conv) => {});
+const bodyParser = require("body-parser");
+const db = require("./db");
+const PORT = process.env.PORT || 5000;
+const app = conversation(); // Actions
+db(); // Setup database
 
 app.handle("crop_information_property_prompt", (conv) => {
   const crop_name = conv.session.params.crop_name_slot;
@@ -40,14 +14,10 @@ app.handle("crop_information_property_prompt", (conv) => {
   );
 });
 
-/*******************/
-
 express()
   .use(bodyParser.json())
   .post("/", app)
   .get("/", async (_req, res) => {
-    const ans = await data.get_properties("धान");
-    console.log(ans);
     res.json({ status: "OK" });
   })
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
