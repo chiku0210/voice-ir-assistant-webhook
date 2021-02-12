@@ -1,0 +1,11 @@
+खादें (किलोग्राम प्रति एकड़)
+
+UREA	DAP or SSP	MOP	ZINC
+110	55		155	20	-
+ 
+
+तत्व (किलोग्राम प्रति एकड़)
+
+NITROGEN	PHOSPHORUS	POTASH
+50		25		12
+  
