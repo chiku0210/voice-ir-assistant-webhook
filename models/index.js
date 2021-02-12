@@ -8,4 +8,4 @@ const cropSchema = new mongoose.Schema({
   },
 });
 
-module.exports = cropSchema;
+module.exports = mongoose.model("Crop", cropSchema);

@@ -3,26 +3,34 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const secrets = require("./secrets");
 const path = require("path");
+const mongoose = require("mongoose");
+const data = require("./data");
 const PORT = process.env.PORT || 5000;
 /*******************/
 
-const { conversation, Image } = require("@assistant/conversation");
+const { conversation } = require("@assistant/conversation");
+
+// Databse
+
+pwd = encodeURIComponent(secrets.pwd);
+mongoose.connect(
+  `mongodb+srv://root:${pwd}@hereisdx.khs4b.mongodb.net/voice-ir?retryWrites=true&w=majority`,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
 
 // Create an app instance
 const app = conversation();
 
 // Register handlers for Actions SDK
-
-app.handle("greeting", (conv) => {
-  let message =
-    "A wondrous greeting, adventurer! Welcome back to the mythical land of Gryffinberg!";
-  if (!conv.user.lastSeenTime) {
-    message =
-      "Welcome to the mythical land of  Gryffinberg! Based on your clothes, you are not from around these lands. It looks like you're on your way to an epic journey.";
-  }
-  conv.add(message);
-});
+app.handle("greeting", (conv) => {});
 
 app.handle("crop_information_property_prompt", (conv) => {
   const crop_name = conv.session.params.crop_name_slot;
@@ -37,7 +45,9 @@ app.handle("crop_information_property_prompt", (conv) => {
 express()
   .use(bodyParser.json())
   .post("/", app)
-  .get("/", (_req, res) => {
+  .get("/", async (_req, res) => {
+    const ans = await data.get_properties("धान");
+    console.log(ans);
     res.json({ status: "OK" });
   })
   .listen(PORT, () => console.log(`Listening on ${PORT}`));

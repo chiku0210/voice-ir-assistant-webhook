@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const cropSchema = require("./models");
+const Crop = require("./models");
 const fs = require("fs");
 const path = require("path");
 const datasetPath = "./dataset/";
@@ -17,8 +17,6 @@ readline.question("Enter database password:", (pwd) => {
       useUnifiedTopology: true,
     }
   );
-
-  const Crop = mongoose.model("Crop", cropSchema);
 
   const list = [];
 
