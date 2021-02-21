@@ -9,7 +9,10 @@ db(); // Setup database
 app.handle("crop_information_property_prompt", (conv) => {
   const crop_name = conv.session.params.crop_name_slot;
   conv.add(`आप ${crop_name} के बारे में क्या जानना चाहते हैं?`);
-  conv.add(new Suggestion({ title: "Soil" }));
+  const crop = get_properties(crop_name);
+  crop.properties.forEach((value, key) => {
+    conv.add(new Suggestion({ title: key }));
+  });
 });
 
 express()
