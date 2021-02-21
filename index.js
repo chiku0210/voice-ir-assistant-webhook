@@ -12,9 +12,10 @@ app.handle("crop_information_property_prompt", async (conv) => {
   const crop_name = conv.session.params.crop_name_slot;
   conv.add(`आप ${crop_name} के बारे में क्या जानना चाहते हैं?`);
   const crop = await get_crop(crop_name);
-  crop.properties.forEach((value, key) => {
-    conv.add(new Suggestion({ title: key }));
-  });
+  const props = crop.properties.keys();
+  for (let i = 0; i < 8; i++) {
+    conv.add(new Suggestion({ title: props[i] }));
+  }
 });
 
 express()
