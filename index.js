@@ -6,6 +6,8 @@ const PORT = process.env.PORT || 5000;
 const app = conversation(); // Actions
 db(); // Setup database
 
+const { get_properties } = require("./data");
+
 app.handle("crop_information_property_prompt", (conv) => {
   const crop_name = conv.session.params.crop_name_slot;
   conv.add(`आप ${crop_name} के बारे में क्या जानना चाहते हैं?`);
