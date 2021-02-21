@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const secrets = require("./secrets");
-
-pwd = process.env.DB_PWD || secrets.pwd;
+const dotenv = require("dotenv");
+dotenv.config();
+pwd = process.env.DB_PWD;
 
 function init() {
   mongoose.connect(

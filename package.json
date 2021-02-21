@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@assistant/conversation": "^3.2.0",
+    "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.15.2",
     "mongoose": "^5.11.15"
