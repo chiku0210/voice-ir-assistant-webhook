@@ -14,7 +14,11 @@ app.handle("crop_information_property_prompt", async (conv) => {
   const crop = await get_crop(crop_name);
   const props = crop.properties.keys();
   for (let i = 0; i < 8; i++) {
-    conv.add(new Suggestion({ title: props[i] }));
+    const val = props.next().value;
+    if (!val) {
+      break;
+    }
+    conv.add(new Suggestion({ title: val }));
   }
 });
 
@@ -22,6 +26,8 @@ express()
   .use(bodyParser.json())
   .post("/", app)
   .get("/", async (_req, res) => {
-    res.json(await get_crop("धान"));
+    const crop = await get_crop("धान");
+    const props = crop.properties.keys();
+    res.json(crop.properties.keys().next().value);
   })
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
