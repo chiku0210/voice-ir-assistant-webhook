@@ -47,8 +47,8 @@ readline.question("Enter database password:", (pwd) => {
               const propertyPath = path.join(filePath, prop);
               const stat = fs.statSync(propertyPath);
               if (stat.isFile()) {
-                const text = fs.readFileSync(propertyPath).toString();
-                const propertyName = path.parse(prop).name;
+                const text = fs.readFileSync(propertyPath).toString().trim();
+                const propertyName = path.parse(prop).name.trim();
                 crop.properties.set(propertyName, text);
               }
             });
@@ -72,5 +72,3 @@ readline.question("Enter database password:", (pwd) => {
   });
   readline.close();
 });
-
-module.exports = cropSchema;
