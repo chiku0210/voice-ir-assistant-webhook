@@ -22,6 +22,17 @@ app.handle("crop_information_property_prompt", async (conv) => {
   }
 });
 
+app.handle("crop_data", async (conv) => {
+  const crop_name = conv.session.params.crop_name_slot;
+  const property = conv.session.params.crop_property;
+
+  const crop = await get_crop(crop_name);
+  conv.add(
+    crop.properties.get(property) ||
+      `No information for ${crop_name}>${property}`
+  );
+});
+
 express()
   .use(bodyParser.json())
   .post("/", app)
