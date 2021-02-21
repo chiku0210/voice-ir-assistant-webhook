@@ -1,6 +1,6 @@
 const Crop = require("./models");
 
-function get_crop_names() {
+async function get_crop_names() {
   const p = new Promise((res, rej) => {
     Crop.find((err, docs) => {
       if (err) {
@@ -10,10 +10,10 @@ function get_crop_names() {
       res(ans);
     });
   });
-  return p;
+  return await p;
 }
 
-function get_properties(crop) {
+async function get_crop(crop) {
   const p = new Promise((res, rej) => {
     Crop.findOne({ name: crop }, (err, doc) => {
       if (err) {
@@ -23,10 +23,10 @@ function get_properties(crop) {
     });
   });
 
-  return p;
+  return await p;
 }
 
 module.exports = {
   get_crop_names: get_crop_names,
-  get_properties: get_properties,
+  get_crop: get_crop,
 };
