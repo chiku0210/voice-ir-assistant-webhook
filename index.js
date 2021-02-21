@@ -18,7 +18,10 @@ app.handle("crop_information_property_prompt", async (conv) => {
     if (!val) {
       break;
     }
-    conv.add(new Suggestion({ title: val }));
+
+    if (val.length < 25) {
+      conv.add(new Suggestion({ title: val }));
+    }
   }
 });
 
