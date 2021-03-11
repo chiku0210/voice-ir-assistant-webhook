@@ -6,6 +6,7 @@ http://agile-island-40140.herokuapp.com/
 
 - Create a file `.env.` in project root.
 - Add a line `DB_STRING=<mongo-srv-string-here>`.
+- In Heroku Console, create an evirornment variable just like above.
 
 Ideas:
 
