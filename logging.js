@@ -5,11 +5,13 @@ function log(param) {
   const message = param.message;
   const data = param.data;
   // Date is auto-inserted
-  const l = new Log({
+  const newLog = new Log({
     type,
     message,
     data,
   });
+
+  newLog.save();
 }
 
 module.exports = log;
