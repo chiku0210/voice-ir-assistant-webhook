@@ -1,4 +1,4 @@
-const Crop = require("./models");
+const Crop = require("./models").Crop;
 
 async function get_crop_names() {
   const p = new Promise((res, rej) => {

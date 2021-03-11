@@ -1,6 +1,7 @@
 const express = require("express");
 const { conversation, Suggestion } = require("@assistant/conversation");
 const bodyParser = require("body-parser");
+const log = require("./logging");
 const db = require("./db");
 const PORT = process.env.PORT || 5000;
 const app = conversation(); // Actions
@@ -10,6 +11,14 @@ const { get_crop } = require("./data");
 
 app.handle("crop_information_property_prompt", async (conv) => {
   const crop_name = conv.session.params.crop_name_slot;
+  log({
+    type: "CROP_INFO_PROPERTY_PROMPT",
+    message: crop_name,
+    data: {
+      prompt: conv.prompt,
+      session: conv.session,
+    },
+  });
   conv.add(`आप ${crop_name} के बारे में क्या जानना चाहते हैं?`);
   const crop = await get_crop(crop_name);
   const props = crop.properties.keys();
@@ -28,6 +37,16 @@ app.handle("crop_information_property_prompt", async (conv) => {
 app.handle("crop_data", async (conv) => {
   const crop_name = conv.session.params.crop_name_slot;
   const property = conv.session.params.crop_property;
+
+  log({
+    type: "CROP_DATA_REQUEST",
+    message: property,
+    data: {
+      crop_name: crop_name,
+      prompt: conv.prompt,
+      session: conv.session,
+    },
+  });
 
   const crop = await get_crop(crop_name);
   conv.add(
